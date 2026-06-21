@@ -109,11 +109,14 @@
     position: fixed; inset: 0; z-index: 999999;
     background: #000;
     display: flex; align-items: center; justify-content: center;
-    transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+    transition: opacity 0.6s ease, visibility 0.6s ease;
     overflow: hidden;
     font-family: 'IBM Plex Mono', monospace;
+    will-change: opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
-  #boot-screen.hidden { transform: translateY(-100%); }
+  #boot-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
   #lock-video {
     position: absolute; inset: 0; width: 100%; height: 100%;
@@ -178,12 +181,12 @@
   #theme-toggle:active { transform: translate(4px,4px); box-shadow: none; }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
 
   body {
     background: var(--bg); color: var(--text);
     font-family: 'Space Grotesk', sans-serif;
-    overflow-x: hidden; position: relative; cursor: none;
+    overflow-x: hidden; max-width: 100vw; position: relative; cursor: none;
     transition: background 0.3s, color 0.3s;
   }
   
@@ -826,26 +829,44 @@
   @media (max-width: 768px) {
     .cursor-dot, .cursor-ring { display: none; }
     body { cursor: auto; }
-    .hero { grid-template-columns: 1fr; }
-    .hero-right { display: none; }
-    .hero-left { padding: 60px 24px; }
-    .section { padding: 80px 24px; }
-    .contact-grid { grid-template-columns: 1fr; }
-    .exp-item { grid-template-columns: 1fr; gap: 16px; padding: 32px 24px; }
-    .projects-grid { grid-template-columns: 1fr; }
+    .hero { grid-template-columns: 1fr 1fr; }
+    .hero-right { display: flex; min-height: 280px; }
+    .hero-left { padding: 28px 8px; }
+    .hero-card { width: 150px; padding: 10px; }
+    .hero-avatar { width: 38px; height: 38px; font-size: 16px; margin-bottom: 8px; }
+    .stat { padding: 4px 2px; }
+    .stat-row { gap: 4px; }
+    .hero-cta { gap: 5px; flex-wrap: wrap; }
+    .btn { padding: 7px 10px; cursor: pointer; }
+    .section { padding: 40px 12px; }
+    .section-title { margin-bottom: 24px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 24px; }
+    .exp-item { grid-template-columns: 1fr; gap: 10px; padding: 18px 12px; }
+    .projects-grid { grid-template-columns: 1fr; gap: 14px; }
+    .project-card-header { padding: 16px 14px 10px; }
+    .project-card-body { padding: 0 14px 16px; }
     .skills-intro { margin-top: 0; }
-    .timeline-strip { grid-template-columns: 1fr; }
-    /* footer mobile handled above in .footer-main */
-    .btn, .skill-square, .filter-btn, #theme-toggle, .copy-btn { cursor: pointer; }
-    #theme-toggle { top: auto; bottom: 20px; }
-    .cert-row { grid-template-columns: 1fr; gap: 10px; padding: 24px 24px 24px 40px; }
-    .cert-seq { position: absolute; top: 18px; right: 24px; }
+    .skill-squares { gap: 10px; }
+    .skill-square { padding: 14px 10px; cursor: pointer; }
+    .skill-square-icon { font-size: 24px; margin-bottom: 8px; }
+    .skill-meter { margin-bottom: 8px; }
+    .timeline-strip { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .timeline-step { padding: 14px 10px; }
+    .filter-btn { padding: 8px 12px; cursor: pointer; }
+    #theme-toggle { top: auto; bottom: 20px; width: 40px; height: 40px; font-size: 18px; cursor: pointer; }
+    .copy-btn { cursor: pointer; }
+    .cert-row { grid-template-columns: 1fr; gap: 8px; padding: 16px 16px 16px 32px; }
+    .cert-seq { position: absolute; top: 14px; right: 16px; }
     .cert-icon { display: none; }
     .cert-issuer { text-align: left; margin-top: 4px; }
-    .ledger-machine-head, .ledger-tally { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 8px; }
+    .ledger-machine-head, .ledger-tally { padding: 12px 14px; flex-direction: column; align-items: flex-start; gap: 6px; }
     .ledger-machine-head .lmh-stamp { position: static; transform: rotate(-4deg); margin-top: 4px; }
-    .ledger-tab { right: 16px; padding: 5px 14px 12px; font-size: 9px; }
-    .ledger-testcard { height: 10px; }
+    .ledger-tab { right: 12px; padding: 4px 10px 8px; font-size: 8px; }
+    .ledger-testcard { height: 8px; }
+    .contact-form { padding: 18px 14px; }
+    .contact-link { padding: 12px 14px; }
+    .tag-item { padding: 5px 10px; }
+    .footer-main { padding: 20px 14px; flex-direction: column; gap: 12px; text-align: center; }
   }
 
   @media (max-width: 1024px) and (min-width: 769px) {
